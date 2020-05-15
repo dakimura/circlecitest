@@ -25,7 +25,7 @@ jobs:
       - run: new_tag_ver="${major_minor_ver}.$(($patch_ver + 1))"
       # release a tag
       - run: go get github.com/tcnksm/ghr
-      - run: ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -delete ${new_tag_ver}
+      - run: ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${new_tag_ver} .
   tag:
     docker:
       - image: circleci/golang:1.14.2
