@@ -7,17 +7,26 @@ executors:
       - image: circleci/golang:1.14.2
 
 commands:
+  hello:
+    executor: golang
+    steps:
+      - run:
+          name: Hello
+          command: |
+            echo hello
   tag:
     executor: golang
     steps:
       - run:
           name: Tag a release
           command: |
-            echo hello
+            echo tag
 
 workflows:
   test:
-    - tag:
-        filters:
-          branches:
-            only: master
+    jobs:
+      - hello
+      - tag:
+          filters:
+            branches:
+              only: master
