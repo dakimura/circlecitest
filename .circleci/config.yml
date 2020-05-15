@@ -7,16 +7,18 @@ jobs:
       - image: circleci/golang:1.14.2
     steps:
       - checkout
-#      - run:
-#          command: |
-#            echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
-#            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
+      - run:
+          command: |
+            echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
+            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
       - run: git pull origin test
       - run: echo "ok"
       - run: echo "${CIRCLE_PULL_REQUEST}"
       - run: git ls-remote --tags
       - run: git tag v1.0.1
       - run: git push origin v1.0.1
+      - run: go get github.com/tcnksm/ghr
+      - run: ghr v.1.0.1
   tag:
     docker:
       - image: circleci/golang:1.14.2
