@@ -6,6 +6,7 @@ jobs:
     docker:
       - image: circleci/golang:1.14.2
     steps:
+      - checkout
       - run:
           command: |
             echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
