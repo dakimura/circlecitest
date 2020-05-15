@@ -13,6 +13,9 @@ jobs:
 #            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
       - run: git pull origin test
       - run: echo "ok"
+      - run: echo "${CI__PULL_REQUEST}"
+      - run: echo "${CIRCLE_PR_NUMBER}"
+      - run: git ls-remote --tags
   tag:
     docker:
       - image: circleci/golang:1.14.2
