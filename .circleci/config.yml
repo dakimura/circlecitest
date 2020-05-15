@@ -11,7 +11,7 @@ jobs:
           command: |
             echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
             if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
-      - run: git pull
+      - run: git pull origin test
       - run: echo "ok"
   tag:
     docker:
