@@ -7,10 +7,10 @@ jobs:
       - image: circleci/golang:1.14.2
     steps:
       - checkout
-      - run:
-          command: |
-            echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
-            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
+#      - run:
+#          command: |
+#            echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
+#            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
       - run: git pull origin test
       - run: echo "ok"
   tag:
