@@ -1,0 +1,25 @@
+version: 2.1
+
+executors:
+  golang:
+    docker:
+      - image: circleci/golang:1.14.2
+
+commands:
+  tag:
+    executor: golang
+    steps:
+      - run:
+          name: Tag a release
+          command: |
+            echo test
+
+workflows:
+  test:
+    jobs:
+      - tag
+#          requires:
+#            - cloudbuild
+          filters:
+            branches:
+              only: master
