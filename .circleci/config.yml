@@ -6,13 +6,38 @@ jobs:
     docker:
       - image: circleci/golang:1.14.2
     steps:
-      - run: echo hello
+      - checkout
+#      - run:
+#          command: |
+#            echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
+#            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
+      - run: echo "${CIRCLE_PULL_REQUEST}"
+      - run:
+          name: make a GitHub Release
+          command: |
+            # output is a string like "9a1058c0602367c955c901dbf727141148663be1 refs/tags/v1.0.0"
+            s=`git ls-remote --tags | tail -n1`
+            # extract version string (=tag name, e.g. v1.0.0) from the output
+            latest_tag=`echo $s | cut -d '/' -f 3`
+            # extract major and minor version
+            major_minor_ver=`echo $latest_tag | cut -d '.' -f 1-2` # e.g. "v1.0"
+            # extract patch version
+            patch_ver=`echo $latest_tag | cut -d '.' -f 3` # e.g. "1"
+            # increment patch version (e.g. v1.0.1 -> v1.0.2)
+            new_tag_ver="${major_minor_ver}.$(($patch_ver + 1))"
+            # release a tag
+            go get github.com/tcnksm/ghr
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${new_tag_ver}
+
   tag:
     docker:
       - image: circleci/golang:1.14.2
     steps:
-      - checkout
-      - run: echo tag
+      - run:
+          command: |
+            echo "machine github.com login ${GITHUB_TOKEN}" > ~/.netrc
+            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
+      - run: git pull
 
 workflows:
   test:
