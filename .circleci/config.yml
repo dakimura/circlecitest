@@ -18,7 +18,7 @@ jobs:
             # output is a string like "9a1058c0602367c955c901dbf727141148663be1 refs/tags/v1.0.0"
             s=`git ls-remote --tags | tail -n1`
             # extract version string (=tag name, e.g. v1.0.0) from the output
-            latest_tag=`echo $s | cut -d '/' -f 5`
+            latest_tag=`echo $s | cut -d '/' -f 3`
             # extract major and minor version
             major_minor_ver=`echo $latest_tag | cut -d '.' -f 1-2` # e.g. "v1.0"
             # extract patch version
