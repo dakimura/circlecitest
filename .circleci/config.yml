@@ -13,9 +13,10 @@ jobs:
 #            if [ -f ~/.gitconfig ]; then rm ~/.gitconfig; fi # Workaround...
       - run: echo "${CIRCLE_PULL_REQUEST}"
       - run:
+          name: make a GitHub Release
           command: |
             # output is a string like "9a1058c0602367c955c901dbf727141148663be1 refs/tags/v1.0.0"
-            s=`git ls-remote --tags`
+            s=`git ls-remote --tags | tail -n1`
             # extract version string (=tag name, e.g. v1.0.0) from the output
             latest_tag=`echo $s | cut -d '/' -f 5`
             # extract major and minor version
