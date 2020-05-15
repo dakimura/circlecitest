@@ -15,3 +15,11 @@ commands:
           command: |
             echo hello
 
+workflows:
+  test:
+    - tag
+      requires:
+        - cloudbuild
+      filters:
+        branches:
+          only: master
