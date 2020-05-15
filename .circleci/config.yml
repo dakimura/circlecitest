@@ -12,7 +12,7 @@ commands:
       - run:
           name: Tag a release
           command: |
-            echo test
+            echo hello
 
 workflows:
   test:
