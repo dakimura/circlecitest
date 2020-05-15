@@ -17,7 +17,7 @@ commands:
 
 workflows:
   test:
-    - tag
-      filters:
-        branches:
-          only: master
+    - tag:
+        filters:
+          branches:
+            only: master
